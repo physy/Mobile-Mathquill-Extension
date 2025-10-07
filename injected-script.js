@@ -94,7 +94,6 @@
 
       // aria-hidden専用のMutationObserver
       this.ariaHiddenObserver = new MutationObserver((mutations) => {
-        console.log("aria-hidden attribute changed", mutations);
         this.handleAriaHiddenChange();
       });
 
@@ -130,7 +129,6 @@
       const keysContainer = document.querySelector(".dcg-keys-container");
       if (!keysContainer) return;
       const isHidden = keysContainer.getAttribute("aria-hidden") === "true";
-      console.log(isHidden, this.isCustomKeyboardVisible);
 
       if (isHidden && this.isCustomKeyboardVisible) {
         // キーボードが非表示でカスタムキーボードが表示中の場合、イベントを削除
@@ -575,10 +573,28 @@
 
       button.addEventListener("click", handler);
       this.attachedEventHandlers.set(button, handler);
-    } // 左選択
+    }
+
+    isSelectionActive() {
+      try {
+        if (window.Calc && window.Calc.focusedMathQuill && window.Calc.focusedMathQuill.mq) {
+          const selection = window.Calc.focusedMathQuill.mq.selection();
+          return selection && selection.startIndex !== selection.endIndex;
+        }
+        return false;
+      } catch (error) {
+        console.error("Error checking selection:", error);
+        return false;
+      }
+    }
+
+    // 左選択
     selectLeft() {
       try {
         if (window.Calc && window.Calc.focusedMathQuill && window.Calc.focusedMathQuill.mq) {
+          if (!this.isSelectionActive()) {
+            window.Calc.focusedMathQuill.mq.__controller.cursor.endSelection();
+          }
           window.Calc.focusedMathQuill.mq.__controller.selectLeft();
         } else {
           this.showMessage("MathQuillが利用できません");
@@ -593,6 +609,9 @@
     selectRight() {
       try {
         if (window.Calc && window.Calc.focusedMathQuill && window.Calc.focusedMathQuill.mq) {
+          if (!this.isSelectionActive()) {
+            window.Calc.focusedMathQuill.mq.__controller.cursor.endSelection();
+          }
           window.Calc.focusedMathQuill.mq.__controller.selectRight();
         } else {
           this.showMessage("MathQuillが利用できません");
