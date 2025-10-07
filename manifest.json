@@ -3,7 +3,11 @@
   "name": "Desmos Mobile Mathquill Assistant",
   "version": "1.0",
   "description": "Adds mobile-friendly math input assistance features to Desmos.",
+  "author": "UJ",
   "permissions": ["activeTab"],
+  "icons": {
+    "128": "icons/icon128.png"
+  },
   "content_scripts": [
     {
       "matches": ["*://*.desmos.com/*"],
