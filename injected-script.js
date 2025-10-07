@@ -223,6 +223,7 @@
       }
       this.customKeyboard = null;
       this.isCustomKeyboardVisible = false;
+      this.isShiftPressed = false;
 
       // イベントハンドラマップをクリア
       this.attachedEventHandlers.clear();
