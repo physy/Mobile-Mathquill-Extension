@@ -307,8 +307,10 @@
     }
 
     generateLetterButton(normal, shift) {
-      const isSpecialPi = normal === "π" || shift === "Π";
       const displayChar = normal;
+      // 大文字または∞記号かチェック
+      const isCapitalOrSpecial =
+        /^[Α-Ωϝ∞]$/.test(displayChar) || displayChar === "π" || displayChar === "Π";
 
       return `
         <div class="dcg-keypad-btn-container" style="flex-grow:1">
@@ -316,7 +318,7 @@
             <span class="dcg-keypad-btn-content">
               <div class="dcg-mq-math-mode dcg-static-mathquill-view">
                 <span class="dcg-mq-root-block" aria-hidden="true">${
-                  isSpecialPi
+                  isCapitalOrSpecial
                     ? `<span class="dcg-mq-nonSymbola">${displayChar}</span>`
                     : `<var>${displayChar}</var>`
                 }</span>
@@ -493,7 +495,11 @@
 
         const mathBlock = button.querySelector(".dcg-mq-root-block");
         if (mathBlock && symbolToShow) {
-          if (symbolToShow === "π" || symbolToShow === "Π") {
+          // 大文字または∞記号かチェック
+          const isCapitalOrSpecial = /^[Α-Ωϝ∞]$/.test(symbolToShow);
+          if (isCapitalOrSpecial) {
+            mathBlock.innerHTML = `<span>${symbolToShow}</span>`;
+          } else if (symbolToShow === "π") {
             mathBlock.innerHTML = `<span class="dcg-mq-nonSymbola">${symbolToShow}</span>`;
           } else {
             mathBlock.innerHTML = `<var>${symbolToShow}</var>`;
