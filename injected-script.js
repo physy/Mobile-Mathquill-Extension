@@ -37,10 +37,10 @@
         ],
         [
           { normal: "φ", shift: "Φ" },
-          { normal: "χ", shift: "ϕ" },
+          { normal: "χ", shift: "Ϝ" },
           { normal: "ψ", shift: "Ψ" },
           { normal: "ω", shift: "ϖ" },
-          { normal: "Ϝ", shift: "∞" },
+          { normal: "ϕ", shift: "∞" },
         ],
       ];
 
@@ -164,8 +164,10 @@
         return; // 既に挿入済み
       }
 
-      // ABCボタンのflex-growを2から1に変更
+      // ABCボタンのスタイルを調整
       abcContainer.style.flexGrow = "1";
+      abcContainer.classList.add("dcg-abc-button--one-column");
+      abcContainer.querySelector(".dcg-keypad-btn-content").textContent = "ABC";
 
       // 新しいギリシャ文字ボタンDOMを作成
       const newButtonHTML = `
@@ -174,7 +176,7 @@
             <span class="dcg-keypad-btn-content">
               <div class="dcg-mq-math-mode dcg-static-mathquill-view">
                 <span class="dcg-mq-root-block" aria-hidden="true">
-                  <span class="dcg-mq-nonSymbola">α</span>
+                  <var>α</var>
                 </span>
               </div>
             </span>
@@ -495,7 +497,11 @@
         if (mathBlock && symbolToShow) {
           // 大文字または∞記号かチェック
           const isCapitalOrSpecial = /^[Α-Ωϝ∞]$/.test(symbolToShow);
-          if (isCapitalOrSpecial) {
+          if (symbolToShow === "Υ") {
+            mathBlock.innerHTML = `<var style="font-family: serif">ϒ</var>`;
+          } else if (symbolToShow === "Ϝ") {
+            mathBlock.innerHTML = `<var>ϝ</var>`;
+          } else if (isCapitalOrSpecial) {
             mathBlock.innerHTML = `<span>${symbolToShow}</span>`;
           } else if (symbolToShow === "π") {
             mathBlock.innerHTML = `<span class="dcg-mq-nonSymbola">${symbolToShow}</span>`;
