@@ -111,10 +111,17 @@
     handleKeysContainerChange() {
       const keysContainer = document.querySelector(".dcg-keys-container");
       if (!keysContainer) return;
-      // dcg-commandがAudioのボタンを探す
+
+      // dcg-command="ABC"のボタンを探す
+      const abcButtons = keysContainer.querySelectorAll('span[dcg-command="ABC"]');
+      abcButtons.forEach((abcButton) => {
+        this.insertCustomKeyboardButtonAfterABC(abcButton);
+      });
+
+      // dcg-command="Audio"のボタンを削除する
       const audioButtons = keysContainer.querySelectorAll('span[dcg-command="Audio"]');
       audioButtons.forEach((audioButton) => {
-        this.convertAudioButtonToCustomKeyboard(audioButton);
+        this.removeAudioButton(audioButton);
       });
     }
 
@@ -148,18 +155,24 @@
       });
     }
 
-    convertAudioButtonToCustomKeyboard(audioButton) {
-      // 既に変換済みかチェック
-      if (audioButton.hasAttribute("data-converted")) return;
+    insertCustomKeyboardButtonAfterABC(abcButton) {
+      // 既に挿入済みかチェック
+      const abcContainer = abcButton.closest(".dcg-keypad-btn-container");
+      if (!abcContainer) return;
 
-      // 元のAudioボタンのコンテナを取得
-      const buttonContainer = audioButton.closest(".dcg-keypad-btn-container");
-      if (!buttonContainer) return;
+      // 既にカスタムボタンが存在するかチェック
+      const nextContainer = abcContainer.nextElementSibling;
+      if (nextContainer && nextContainer.querySelector('[data-custom-greek="true"]')) {
+        return; // 既に挿入済み
+      }
 
-      // 新しいボタンDOMを作成
+      // ABCボタンのflex-growを2から1に変更
+      abcContainer.style.flexGrow = "1";
+
+      // 新しいギリシャ文字ボタンDOMを作成
       const newButtonHTML = `
         <div class="dcg-keypad-btn-container" style="flex-grow:1">
-          <span role="button" class="dcg-keypad-btn dcg-btn-dark-on-gray" aria-label="読み上げモードを切り替える" aria-disabled="true" ontap="" data-converted="true">
+          <span role="button" class="dcg-keypad-btn dcg-btn-dark-on-gray" aria-label="ギリシャ文字キーボード" ontap="" data-custom-greek="true">
             <span class="dcg-keypad-btn-content">
               <div class="dcg-mq-math-mode dcg-static-mathquill-view">
                 <span class="dcg-mq-root-block" aria-hidden="true">
@@ -171,14 +184,13 @@
         </div>
       `;
 
-      // 新しいボタンDOMを挿入
+      // 新しいボタンDOMを作成して挿入
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = newButtonHTML;
       const newButtonContainer = tempDiv.firstElementChild;
 
-      // 元のボタンコンテナを新しいものに置き換え
-      buttonContainer.parentNode.insertBefore(newButtonContainer, buttonContainer);
-      buttonContainer.remove();
+      // ABCボタンの直後に挿入
+      abcContainer.parentNode.insertBefore(newButtonContainer, abcContainer.nextElementSibling);
 
       // 新しいボタンにクリックイベントを追加
       const newButton = newButtonContainer.querySelector(".dcg-keypad-btn");
@@ -188,6 +200,17 @@
           e.stopPropagation();
           this.toggleCustomKeyboard();
         });
+      }
+    }
+
+    removeAudioButton(audioButton) {
+      // 既に削除済みかチェック
+      if (!audioButton || !audioButton.parentNode) return;
+
+      // Audioボタンのコンテナを取得
+      const buttonContainer = audioButton.closest(".dcg-keypad-btn-container");
+      if (buttonContainer && buttonContainer.parentNode) {
+        buttonContainer.parentNode.removeChild(buttonContainer);
       }
     }
 
