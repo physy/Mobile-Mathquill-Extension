@@ -117,10 +117,20 @@
         this.insertCustomKeyboardButtonAfterABC(abcButton);
       });
 
+      const row = abcButtons[0]?.closest(".dcg-keypad-row");
+
+      if (!row) return;
+
       // dcg-command="Audio"のボタンを削除する
-      const audioButtons = keysContainer.querySelectorAll('span[dcg-command="Audio"]');
+      const audioButtons = row.querySelectorAll('span[dcg-command="Audio"]');
       audioButtons.forEach((audioButton) => {
         this.removeAudioButton(audioButton);
+      });
+
+      // dcg-command="i"のボタンを削除する(3Dで複素数を有効時)
+      const IButtons = row.querySelectorAll('span[dcg-command="i"]');
+      IButtons.forEach((IButton) => {
+        this.removeIButton(IButton);
       });
     }
 
@@ -159,8 +169,8 @@
       if (!abcContainer) return;
 
       // 既にカスタムボタンが存在するかチェック
-      const nextContainer = abcContainer.nextElementSibling;
-      if (nextContainer && nextContainer.querySelector('[data-custom-greek="true"]')) {
+      const container = abcContainer.closest(".dcg-basic-keypad");
+      if (container && container.querySelector('[data-custom-greek="true"]')) {
         return; // 既に挿入済み
       }
 
@@ -209,6 +219,17 @@
 
       // Audioボタンのコンテナを取得
       const buttonContainer = audioButton.closest(".dcg-keypad-btn-container");
+      if (buttonContainer && buttonContainer.parentNode) {
+        buttonContainer.parentNode.removeChild(buttonContainer);
+      }
+    }
+
+    removeIButton(IButton) {
+      // 既に削除済みかチェック
+      if (!IButton || !IButton.parentNode) return;
+
+      // Iボタンのコンテナを取得
+      const buttonContainer = IButton.closest(".dcg-keypad-btn-container");
       if (buttonContainer && buttonContainer.parentNode) {
         buttonContainer.parentNode.removeChild(buttonContainer);
       }
@@ -342,7 +363,7 @@
     generateBackspaceButton() {
       return `
         <div class="dcg-keypad-btn-container" style="flex-grow:1.5">
-          <span role="button" class="dcg-keypad-btn dcg-btn-dark-on-gray" data-action="backspace" aria-label="バックスペース" ontap="">
+          <span role="button" class="dcg-keypad-btn dcg-btn-dark-on-gray" dcg-command="backspace" data-action="backspace" aria-label="バックスペース" ontap="">
             <span class="dcg-keypad-btn-content"><i class="dcg-icon-delete" aria-hidden="true"></i></span>
           </span>
         </div>
@@ -418,7 +439,7 @@
             </span>
           </div>
           <div class="dcg-keypad-btn-container" style="flex-grow:1.5">
-            <span role="button" class="dcg-keypad-btn dcg-btn-blue" data-action="return" aria-label="Enter" ontap="">
+            <span role="button" class="dcg-keypad-btn dcg-btn-blue" dcg-command="enter" data-action="return" aria-label="Enter" ontap="">
               <span class="dcg-keypad-btn-content">
                 <i class="dcg-icon-arrow-enter" aria-hidden="true"></i>
               </span>
