@@ -52,9 +52,9 @@
 }
 
 /* カスタムキーボードが表示されている間、デフォルトキーボードを隠す */
-.dcg-keys-background[data-hidden-by-custom="true"] {
+/* .dcg-keys-background[data-hidden-by-custom="true"] {
   display: none !important;
-}
+} */
 
 /* 数式スクロール */
 .dcg-mq-editable-field

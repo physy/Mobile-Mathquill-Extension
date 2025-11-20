@@ -757,7 +757,9 @@
         ".dcg-keys-container .dcg-keys-background:not(.dcg-custom-mathquill-keyboard)"
       );
       if (defaultKeyboard) {
-        defaultKeyboard.style.display = "none";
+        defaultKeyboard.querySelector(".dcg-keys").style.display = "none";
+        defaultKeyboard.style["border-top"] = "none";
+        defaultKeyboard.style["box-shadow"] = "none";
         defaultKeyboard.setAttribute("data-hidden-by-custom", "true");
       }
     }
@@ -767,7 +769,9 @@
         ".dcg-keys-container .dcg-keys-background[data-hidden-by-custom='true']"
       );
       if (defaultKeyboard) {
-        defaultKeyboard.style.display = "";
+        defaultKeyboard.querySelector(".dcg-keys").style.display = "";
+        defaultKeyboard.style["border-top"] = "";
+        defaultKeyboard.style["box-shadow"] = "";
         defaultKeyboard.removeAttribute("data-hidden-by-custom");
       }
     }
