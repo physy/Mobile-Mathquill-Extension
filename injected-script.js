@@ -380,12 +380,26 @@
           </div>
           <div class="dcg-keypad-btn-container" style="flex-grow:0.8">
             <span role="button" class="dcg-keypad-btn dcg-btn-dark-on-gray" data-action="select-left" aria-label="左選択" ontap="">
-              <span class="dcg-keypad-btn-content">◄</span>
+              <span class="dcg-keypad-btn-content">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img">
+                  <title>Left Select</title>
+                  <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 6 L8 12 L15 18" />
+                  </g>
+                </svg>
+              </span>
             </span>
           </div>
           <div class="dcg-keypad-btn-container" style="flex-grow:0.8">
             <span role="button" class="dcg-keypad-btn dcg-btn-dark-on-gray" data-action="select-right" aria-label="右選択" ontap="">
-              <span class="dcg-keypad-btn-content">►</span>
+              <span class="dcg-keypad-btn-content">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img">
+                  <title>Right Select</title>
+                  <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 6 L16 12 L9 18" />
+                  </g>
+                </svg>
+              </span>
             </span>
           </div>
           <div class="dcg-keypad-btn-container" style="flex-grow:1">
@@ -394,13 +408,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img">
                   <title>Select all</title>
                   <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                    <!-- outer dotted rectangle -->
                     <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="3 2"/>
-                    <!-- corner handles -->
-                    <rect x="3" y="3" width="3" height="3" fill="currentColor"/>
-                    <rect x="18" y="3" width="3" height="3" fill="currentColor"/>
-                    <rect x="3" y="18" width="3" height="3" fill="currentColor"/>
-                    <rect x="18" y="18" width="3" height="3" fill="currentColor"/>
                   </g>
                 </svg>
               </span>
@@ -413,9 +421,9 @@
                   <title>Copy</title>
                   <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                     <!-- back page -->
-                    <rect x="7" y="4" width="11" height="14" rx="1.5"/>
+                    <path d="M8 4 v13 h10 v-10 l-3 -3 h-7 z" />
                     <!-- front page slightly offset -->
-                    <rect x="4" y="7" width="11" height="14" rx="1.5"/>
+                    <path d="M6 7 h-2 v14 h11 v-2 "/>
                   </g>
                 </svg>
               </span>
@@ -428,7 +436,7 @@
                 <title>Paste</title>
                 <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                   <!-- clipboard body -->
-                  <rect x="6" y="5" width="12" height="14" rx="2"/>
+                  <path d="M7.5 6 h-1.5 v14 h12 v-14 h-1.5" rx="2"/>
                   <!-- clip at top -->
                   <path d="M9 4.5h6a1.5 1.5 0 0 1 1.5 1.5v0a1 1 0 0 1-1 1H8.5a1 1 0 0 1-1-1v0A1.5 1.5 0 0 1 9 4.5z" stroke="currentColor" fill="none"/>
                   <!-- a short page line to indicate content -->
