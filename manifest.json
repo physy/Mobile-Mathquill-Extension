@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Desmos Mobile Mathquill Assistant",
-  "version": "1.0.2",
-  "description": "Adds mobile-friendly math input assistance features to Desmos.",
+  "name": "Desmos Mobile Helper",
+  "version": "1.0.3",
+  "description": "Adds mobile-friendly copy/paste and Greek letter buttons to Desmos.",
   "author": "UJ",
   "permissions": ["activeTab"],
   "icons": {
