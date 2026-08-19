@@ -627,10 +627,7 @@
     selectLeft() {
       try {
         if (window.Calc && window.Calc.focusedMathQuill && window.Calc.focusedMathQuill.mq) {
-          if (!this.isSelectionActive()) {
-            window.Calc.focusedMathQuill.mq.__controller.cursor.endSelection();
-          }
-          window.Calc.focusedMathQuill.mq.__controller.selectLeft();
+          window.Calc.focusedMathQuill.keystroke("Shift-Left");
         } else {
           this.showMessage("MathQuillが利用できません");
         }
@@ -644,10 +641,7 @@
     selectRight() {
       try {
         if (window.Calc && window.Calc.focusedMathQuill && window.Calc.focusedMathQuill.mq) {
-          if (!this.isSelectionActive()) {
-            window.Calc.focusedMathQuill.mq.__controller.cursor.endSelection();
-          }
-          window.Calc.focusedMathQuill.mq.__controller.selectRight();
+          window.Calc.focusedMathQuill.keystroke("Shift-Right");
         } else {
           this.showMessage("MathQuillが利用できません");
         }
@@ -660,8 +654,7 @@
     copyMathExpression() {
       try {
         if (window.Calc && window.Calc.focusedMathQuill && window.Calc.focusedMathQuill.mq) {
-          const selection =
-            window.Calc.focusedMathQuill.mq.__controller.exportLatexSelection().selection;
+          const selection = window.Calc.focusedMathQuill.mq.selection();
           const latex =
             selection.latex.slice(selection.startIndex, selection.endIndex) ||
             window.Calc.focusedMathQuill.mq.latex();
@@ -762,7 +755,7 @@
 
     hideDefaultKeyboard() {
       const defaultKeyboard = document.querySelector(
-        ".dcg-keys-container .dcg-keys-background:not(.dcg-custom-mathquill-keyboard)"
+        ".dcg-keys-container .dcg-keys-background:not(.dcg-custom-mathquill-keyboard)",
       );
       if (defaultKeyboard) {
         defaultKeyboard.querySelector(".dcg-keys").style.display = "none";
@@ -774,7 +767,7 @@
 
     showDefaultKeyboard() {
       const defaultKeyboard = document.querySelector(
-        ".dcg-keys-container .dcg-keys-background[data-hidden-by-custom='true']"
+        ".dcg-keys-container .dcg-keys-background[data-hidden-by-custom='true']",
       );
       if (defaultKeyboard) {
         defaultKeyboard.querySelector(".dcg-keys").style.display = "";
